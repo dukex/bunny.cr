@@ -54,8 +54,33 @@ module Bunny
       )
     end
 
-    def browser_files(storage_zone : String,
-                      path : String)
+    def download(storage_zone : String, path : String, output : IO)
+      HTTP::Client.get(
+        "#{ENDPOINT_URL}/#{storage_zone}/#{path}",
+        headers: HTTP::Headers{"AccessKey" => @access_key},
+      ) do |response|
+        puts path
+        puts "body"
+        puts response.body
+        puts "body_io"
+        puts response.body_io
+        puts response.status_code
+
+        if response.success?
+          if response.body?
+            output << response.body
+          elsif response.body_io?
+            IO.copy(response.body_io, output)
+          else
+            raise Exception.new("error download")
+          end
+        else
+          raise Exception.new("error download")
+        end
+      end
+    end
+
+    def browser_files(storage_zone : String, path : String)
       body = Crest.get(
         "#{ENDPOINT_URL}/#{storage_zone}/#{path}/",
         headers: {"AccessKey" => @access_key},
