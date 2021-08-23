@@ -1,0 +1,13 @@
+name: bunny-cdn
+version: 0.1.0
+
+authors:
+  - Emerson Almeida <emersonalmeidax@gmail.com>
+
+crystal: 0.36.1
+
+license: MIT
+
+dependencies:
+  crest:
+    github: mamantoha/crest
