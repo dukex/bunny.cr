@@ -59,13 +59,6 @@ module Bunny
         "#{ENDPOINT_URL}/#{storage_zone}/#{path}",
         headers: HTTP::Headers{"AccessKey" => @access_key},
       ) do |response|
-        puts path
-        puts "body"
-        puts response.body
-        puts "body_io"
-        puts response.body_io
-        puts response.status_code
-
         if response.success?
           if response.body?
             output << response.body
